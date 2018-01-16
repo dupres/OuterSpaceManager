@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Outer Space Manager</string>
+    <string name="Identifiant">Identifiant</string>
+    <string name="mot_de_passe">Mot de passe</string>
+    <string name="se_connecter">Se connecter</string>
+    <string name="cr_er_son_compte">Créer son compte !</string>
+    <string name="e_mail">E-Mail</string>
+</resources>
