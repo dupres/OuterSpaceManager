@@ -7,6 +7,7 @@ package dupre.com.outerspacemanager.outerspacemanager;
 public class User {
     private String username;
     private String password;
+    private String email;
 
     public String getEmail() {
         return email;
@@ -15,8 +16,6 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    private String email;
 
     public String getPassword() {
         return password;
@@ -30,6 +29,11 @@ public class User {
         this.username = username;
         this.password = password;
         this.email = email;
+    }
+
+    public User(String username, String password){
+        this.username = username;
+        this.password = password;
     }
 
     public String getUsername() {

@@ -13,19 +13,19 @@ public class AuthResponse {
         this.token = token;
     }
 
-    public int getExpires() {
+    public long getExpires() {
         return expires;
     }
 
-    public void setExpires(int expires) {
+    public void setExpires(long expires) {
         this.expires = expires;
     }
 
     private String token;
-    private int expires;
+    private long expires;
 
 
-    public AuthResponse(String token, int expires) {
+    public AuthResponse(String token, long expires) {
         this.token = token;
         this.expires = expires;
     }
