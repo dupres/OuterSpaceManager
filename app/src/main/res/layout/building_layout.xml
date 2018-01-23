@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@android:color/background_dark"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textViewBuildingId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Id :"
+        android:textColor="@android:color/background_light" />
+
+    <TextView
+        android:id="@+id/textViewBuildingName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nom :"
+        android:textColor="@android:color/background_light" />
+
+    <TextView
+        android:id="@+id/textViewBuildingImageURL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="URL de l'image :"
+        android:textColor="@android:color/background_light" />
+
+    <TextView
+        android:id="@+id/textViewBuildingLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Level :"
+        android:textColor="@android:color/background_light" />
+
+    <TextView
+        android:id="@+id/textViewBuildingBuild"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Est en construction :"
+        android:textColor="@android:color/background_light" />
+
+    <TextView
+        android:id="@+id/textViewBuildingEffect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Effet :"
+        android:textColor="@android:color/background_light" />
+
+    <TextView
+        android:id="@+id/textViewBuildingEffectAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Quantité"
+        android:textColor="@android:color/background_light" />
+
+    <TextView
+        android:id="@+id/textViewBuildingGC"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Coût en gaz"
+        android:textColor="@android:color/background_light" />
+
+    <TextView
+        android:id="@+id/textViewBuildingMC"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Coût en minéraux"
+        android:textColor="@android:color/background_light" />
+
+    <TextView
+        android:id="@+id/textViewBuildingTTB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Temps de construction"
+        android:textColor="@android:color/background_light" />
+
+
+</LinearLayout>

@@ -9,10 +9,16 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
+
+import okhttp3.OkHttpClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -25,6 +31,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button btnQuitter;
     private ArrayList<Button> btnList;
     private TextView tvUsername;
+    private Toast toastMessage;
+    private TextView tvPoints;
 
     public MainActivity() {
     }
@@ -58,9 +66,78 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnList.add(btnQuitter);
 
         tvUsername = (TextView) findViewById(R.id.textViewUsername);
+        tvPoints = (TextView) findViewById(R.id.textViewPoints);
 
         SharedPreferences settings = getSharedPreferences("session",0);
         tvUsername.setText("Capitaine "+ucfirst(settings.getString("username" ,"").toString()));
+
+
+        //-------------------------------
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://outer-space-manager.herokuapp.com")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        osma_service service = retrofit.create(osma_service.class);
+        Call<CUResponse> request = service.getCurrentUser(settings.getString("token",""));
+
+        request.enqueue(new Callback<CUResponse>(){
+            @Override
+            public void onResponse(Call<CUResponse> call, Response<CUResponse> response) {
+                //toastMessage = Toast.makeText(getApplicationContext(), "Yep baby !"+response.toString(), Toast.LENGTH_LONG);
+                //tvDebug.setText(toString());
+                //toastMessage.show();
+                final String PREFS_NAME = "session";
+
+                SharedPreferences settings = getSharedPreferences(PREFS_NAME,0);
+                SharedPreferences.Editor editor = settings.edit();
+
+
+                if (response.code()==403) {
+
+                    try {
+                        tvPoints.setText(response.errorBody().string());
+                        //tvPoints.setText(settings.getString("token",""));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }else if (response.code() ==401){
+                    try{
+                        tvPoints.setText(response.errorBody().string());
+                    } catch (IOException e){
+                        e.printStackTrace();
+                    }
+                }else{
+                    editor.putString("gas", response.body().getGas());
+                    editor.putString("gasModifier", response.body().getGasModifier());
+                    editor.putString("minerals", response.body().getMinerals());
+                    editor.putString("mineralsModifier", response.body().getMineralModifier());
+                    editor.putString("points", response.body().getPoints());
+                    editor.commit();
+
+                    if (response.body().getPoints() == "1") {
+                        tvPoints.setText("1 point");
+                    } else {
+                        tvPoints.setText(response.body().getPoints() + " points");
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<CUResponse> call, Throwable t) {
+                toastMessage = Toast.makeText(getApplicationContext(), "Une erreur est survenue, impossible de récupérer les informations de l'utilisateur.", Toast.LENGTH_LONG);
+                toastMessage.show();
+            }
+        });
+
+
+
+        //-------------------------------
     }
 
     @Override
@@ -92,8 +169,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }else if(v == btnBat){
             Intent intent = new Intent (MainActivity.this, BatActivity.class);
             startActivity(intent);
+        }else if (v == btnFlotte){
+            Intent intent = new Intent (MainActivity.this, FlotteActivity.class);
+            startActivity(intent);
         }else if(v == btnRech){
             Intent intent = new Intent (MainActivity.this, RechActivity.class);
+            startActivity(intent);
+        }else if(v == btnChant){
+            Intent intent = new Intent (MainActivity.this, ChantActivity.class);
+            startActivity(intent);
+        }else if(v == btnGalaxie){
+            Intent intent = new Intent (MainActivity.this, GalaxieActivity.class);
             startActivity(intent);
         }
 

@@ -22,6 +22,12 @@ public interface osma_service {
     @POST(baseUrl + "/api/v1/auth/create")
     Call<AuthResponse> Creation(@Body User user);
 
+    @GET(baseUrl + "/api/v1/users/get")
+    Call<CUResponse> getCurrentUser(@Header("x-access-token") String token);
+
+    @GET(baseUrl + "/api/v1/buildings/list")
+    Call<buildingsResponse> getBuildings(@Header("x-access-token") String token);
+
     //@POST("api/") String stringConnexion(@Header("Authorization") String authorization, @Path("user") String user, @Query("sort") String sort, @Body User user);
     ///api/vXXX/auth/login
 }
