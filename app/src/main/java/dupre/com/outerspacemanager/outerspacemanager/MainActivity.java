@@ -65,6 +65,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnList.add(btnGalaxie);
         btnList.add(btnQuitter);
 
+
+
         tvUsername = (TextView) findViewById(R.id.textViewUsername);
         tvPoints = (TextView) findViewById(R.id.textViewPoints);
 

@@ -1,14 +1,17 @@
 package dupre.com.outerspacemanager.outerspacemanager;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,14 +29,16 @@ public class BatActivity extends AppCompatActivity implements AdapterView.OnClic
     private Button btnMenu;
     private TextView tvDebug;
     private Toast toastMessage;
+    private ListView listBuildings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bat);
 
+
         btnMenu = (Button) findViewById(R.id.buttonMenuBat);
-            btnMenu.setOnClickListener(this);
+        btnMenu.setOnClickListener(this);
 
         tvDebug = (TextView) findViewById(R.id.textViewBatDebug);
 
@@ -46,6 +51,7 @@ public class BatActivity extends AppCompatActivity implements AdapterView.OnClic
         osma_service service = retrofit.create(osma_service.class);
         Call<buildingsResponse> request = service.getBuildings(settings.getString("token",""));
 
+
         request.enqueue(new Callback<buildingsResponse>(){
             @Override
             public void onResponse(Call<buildingsResponse> call, Response<buildingsResponse> response) {
@@ -53,6 +59,8 @@ public class BatActivity extends AppCompatActivity implements AdapterView.OnClic
                 //tvDebug.setText(toString());
                 //toastMessage.show();
                 final String PREFS_NAME = "session";
+
+
 
                 SharedPreferences settings = getSharedPreferences(PREFS_NAME,0);
                 SharedPreferences.Editor editor = settings.edit();
@@ -72,15 +80,16 @@ public class BatActivity extends AppCompatActivity implements AdapterView.OnClic
                     final Building[] buildingsArray = buildingsList.toArray(new Building[buildingsList.size()]);
 
                     ArrayAdapter<Building> buildingAdapter =
-                            new ArrayAdapter<Building>(BatActivity.this, 0, buildingsArray){
+                            new ArrayAdapter<Building>(getApplicationContext(), R.layout.building_layout, buildingsArray){
                                 @Override
                                 public View getView(int position, View convertView, ViewGroup parent){
                                     Building currentBuilding = buildingsArray[position];
 
-                                    if(convertView == null) {
-                                        convertView = getLayoutInflater()
-                                                .inflate(R.layout.building_layout, null, false);
-                                    }
+                                    LayoutInflater li = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                                    convertView = li.inflate(R.layout.building_layout, parent, false);
+
+                                    //convertView = getLayoutInflater()
+                                    //        .inflate(R.layout.building_layout, parent, false);
 
                                     TextView tvBuildingId = (TextView) convertView.findViewById(R.id.textViewBuildingId);
                                     TextView tvBuildingName = (TextView) convertView.findViewById(R.id.textViewBuildingName);
@@ -99,12 +108,11 @@ public class BatActivity extends AppCompatActivity implements AdapterView.OnClic
                                     tvBuildingLevel.setText(currentBuilding.getLevel());
                                     tvBuildingBuild.setText(currentBuilding.getBuilding());
                                     tvBuildingEffect.setText(currentBuilding.getEffect());
-                                    tvBuildingEffectAmount.setText((Integer.parseInt(currentBuilding.getGetAmountOfEffectLevel0())+ Integer.parseInt(currentBuilding.getGetAmountOfEffectLevel0().toString()) * Integer.parseInt(currentBuilding.getLevel().toString())));
-                                    tvBuildingGC.setText((Integer.parseInt(currentBuilding.getGasCostLevel0())+ Integer.parseInt(currentBuilding.getGasCostByLevel().toString()) * Integer.parseInt(currentBuilding.getLevel().toString())));
-                                    tvBuildingMC.setText((Integer.parseInt(currentBuilding.getMineralCostLevel0())+ Integer.parseInt(currentBuilding.getMineralCostByLevel().toString()) * Integer.parseInt(currentBuilding.getLevel().toString())));
-                                    tvBuildingTTB.setText((Integer.parseInt(currentBuilding.getTimeToBuildLevel0())+ Integer.parseInt(currentBuilding.getTimeToBuildByLevel().toString()) * Integer.parseInt(currentBuilding.getLevel().toString())));
 
-                                    //ICI
+                                    tvBuildingEffectAmount.setText(String.valueOf(Integer.parseInt(currentBuilding.getAmountOfEffectLevel0())+ Integer.parseInt(currentBuilding.getAmountOfEffectByLevel().toString()) * Integer.parseInt(currentBuilding.getLevel().toString())));
+                                    tvBuildingGC.setText(String.valueOf((Integer.parseInt(currentBuilding.getGasCostLevel0())+ Integer.parseInt(currentBuilding.getGasCostByLevel().toString()) * Integer.parseInt(currentBuilding.getLevel().toString()))));
+                                    tvBuildingMC.setText(String.valueOf((Integer.parseInt(currentBuilding.getMineralCostLevel0())+ Integer.parseInt(currentBuilding.getMineralCostByLevel().toString()) * Integer.parseInt(currentBuilding.getLevel().toString()))));
+                                    tvBuildingTTB.setText(String.valueOf((Integer.parseInt(currentBuilding.getTimeToBuildLevel0())+ Integer.parseInt(currentBuilding.getTimeToBuildByLevel().toString()) * Integer.parseInt(currentBuilding.getLevel().toString()))));
 
                                     return convertView;
                                 }
@@ -112,11 +120,12 @@ public class BatActivity extends AppCompatActivity implements AdapterView.OnClic
 
 
 
-                    //editor.putString("gas", response.body().getGas());
+                    //editor.putString("gas", response.body().getBuildings().toString());
                     //editor.commit();
-                }
+                    listBuildings = (ListView) findViewById(R.id.listViewBuildings);
+                    listBuildings.setAdapter(buildingAdapter);
 
-
+                    }
             }
 
             @Override

@@ -7,7 +7,7 @@ package dupre.com.outerspacemanager.outerspacemanager;
 public class Building {
     private String level;
     private String amountOfEffectByLevel;
-    private String getAmountOfEffectLevel0;
+    private String amountOfEffectLevel0;
     private String buildingId;
     private String building;
     private String effect;
@@ -20,10 +20,10 @@ public class Building {
     private String timeToBuildByLevel;
     private String timeToBuildLevel0;
 
-    public Building(String level, String amountOfEffectByLevel, String getAmountOfEffectLevel0, String buildingId, String building, String effect, String gasCostByLevel, String gasCostLevel0, String imageURL, String mineralCostByLevel, String mineralCostLevel0, String name, String timeToBuildByLevel, String timeToBuildLevel0) {
+    public Building(String level, String amountOfEffectByLevel, String amountOfEffectLevel0, String buildingId, String building, String effect, String gasCostByLevel, String gasCostLevel0, String imageURL, String mineralCostByLevel, String mineralCostLevel0, String name, String timeToBuildByLevel, String timeToBuildLevel0) {
         this.level = level;
         this.amountOfEffectByLevel = amountOfEffectByLevel;
-        this.getAmountOfEffectLevel0 = getAmountOfEffectLevel0;
+        this.amountOfEffectLevel0 = amountOfEffectLevel0;
         this.buildingId = buildingId;
         this.building = building;
         this.effect = effect;
@@ -53,12 +53,12 @@ public class Building {
         this.amountOfEffectByLevel = amountOfEffectByLevel;
     }
 
-    public String getGetAmountOfEffectLevel0() {
-        return getAmountOfEffectLevel0;
+    public String getAmountOfEffectLevel0() {
+        return amountOfEffectLevel0;
     }
 
-    public void setGetAmountOfEffectLevel0(String getAmountOfEffectLevel0) {
-        this.getAmountOfEffectLevel0 = getAmountOfEffectLevel0;
+    public void setAmountOfEffectLevel0(String AmountOfEffectLevel0) {
+        this.amountOfEffectLevel0 = AmountOfEffectLevel0;
     }
 
     public String getBuildingId() {
