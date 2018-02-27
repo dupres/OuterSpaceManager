@@ -15,6 +15,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -30,15 +32,19 @@ public class BatActivity extends AppCompatActivity implements AdapterView.OnClic
     private TextView tvDebug;
     private Toast toastMessage;
     private ListView listBuildings;
+    private TextView tvGas;
+    private TextView tvMinerals;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bat);
 
-
         btnMenu = (Button) findViewById(R.id.buttonMenuBat);
         btnMenu.setOnClickListener(this);
+
+        tvGas = (TextView) findViewById(R.id.tvGas);
+        tvMinerals = (TextView) findViewById(R.id.tvMinerals);
 
         tvDebug = (TextView) findViewById(R.id.textViewBatDebug);
 
@@ -47,10 +53,16 @@ public class BatActivity extends AppCompatActivity implements AdapterView.OnClic
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        SharedPreferences settings = getSharedPreferences("session",0);
-        osma_service service = retrofit.create(osma_service.class);
+        final String PREFS_NAME = "session";
+        final SharedPreferences settings = getSharedPreferences(PREFS_NAME,0);
+        final osma_service service = retrofit.create(osma_service.class);
         Call<buildingsResponse> request = service.getBuildings(settings.getString("token",""));
+        SharedPreferences.Editor editor = settings.edit();
+        final Integer gas = Integer.parseInt(settings.getString("gas","0"));
+        final Integer minerals = Integer.parseInt(settings.getString("minerals","0"));
 
+        tvGas.setText(gas.toString());
+        tvMinerals.setText(minerals.toString());
 
         request.enqueue(new Callback<buildingsResponse>(){
             @Override
@@ -58,13 +70,6 @@ public class BatActivity extends AppCompatActivity implements AdapterView.OnClic
                 //toastMessage = Toast.makeText(getApplicationContext(), "Yep baby !"+response.toString(), Toast.LENGTH_LONG);
                 //tvDebug.setText(toString());
                 //toastMessage.show();
-                final String PREFS_NAME = "session";
-
-
-
-                SharedPreferences settings = getSharedPreferences(PREFS_NAME,0);
-                SharedPreferences.Editor editor = settings.edit();
-
 
                 if (response.code()>400) {
 
@@ -102,17 +107,60 @@ public class BatActivity extends AppCompatActivity implements AdapterView.OnClic
                                     TextView tvBuildingMC = (TextView) convertView.findViewById(R.id.textViewBuildingMC);
                                     TextView tvBuildingTTB = (TextView) convertView.findViewById(R.id.textViewBuildingTTB);
 
-                                    tvBuildingId.setText(currentBuilding.getBuildingId());
-                                    tvBuildingName.setText(currentBuilding.getName());
-                                    tvBuildingImageUrl.setText(currentBuilding.getImageURL());
-                                    tvBuildingLevel.setText(currentBuilding.getLevel());
-                                    tvBuildingBuild.setText(currentBuilding.getBuilding());
-                                    tvBuildingEffect.setText(currentBuilding.getEffect());
+                                    Integer level = Integer.parseInt(currentBuilding.getLevel());
+                                    Integer amountOfEffectByLevel = Integer.parseInt(currentBuilding.getAmountOfEffectByLevel());
+                                    Integer amountOfEffectLevel0 = Integer.parseInt(currentBuilding.getAmountOfEffectLevel0());
+                                    Integer buildingId = Integer.parseInt(currentBuilding.getBuildingId());
+                                    Boolean building = Boolean.getBoolean(currentBuilding.getBuilding());
+                                    String effect = currentBuilding.getEffect();
+                                    Integer gasCostByLevel = Integer.parseInt(currentBuilding.getGasCostByLevel());
+                                    Integer gasCostLevel0 = Integer.parseInt(currentBuilding.getGasCostLevel0());
+                                    String imageUrl = currentBuilding.getImageURL();
+                                    Integer mineralCostByLevel = Integer.parseInt(currentBuilding.getMineralCostByLevel());
+                                    Integer mineralCostLevel0 = Integer.parseInt(currentBuilding.getMineralCostLevel0());
+                                    String name = currentBuilding.getName();
+                                    Integer timeToBuildByLevel = Integer.parseInt(currentBuilding.getTimeToBuildByLevel());
+                                    Integer timeToBuildLevel0 = Integer.parseInt(currentBuilding.getTimeToBuildLevel0());
 
-                                    tvBuildingEffectAmount.setText(String.valueOf(Integer.parseInt(currentBuilding.getAmountOfEffectLevel0())+ Integer.parseInt(currentBuilding.getAmountOfEffectByLevel().toString()) * Integer.parseInt(currentBuilding.getLevel().toString())));
-                                    tvBuildingGC.setText(String.valueOf((Integer.parseInt(currentBuilding.getGasCostLevel0())+ Integer.parseInt(currentBuilding.getGasCostByLevel().toString()) * Integer.parseInt(currentBuilding.getLevel().toString()))));
-                                    tvBuildingMC.setText(String.valueOf((Integer.parseInt(currentBuilding.getMineralCostLevel0())+ Integer.parseInt(currentBuilding.getMineralCostByLevel().toString()) * Integer.parseInt(currentBuilding.getLevel().toString()))));
-                                    tvBuildingTTB.setText(String.valueOf((Integer.parseInt(currentBuilding.getTimeToBuildLevel0())+ Integer.parseInt(currentBuilding.getTimeToBuildByLevel().toString()) * Integer.parseInt(currentBuilding.getLevel().toString()))));
+                                    tvBuildingId.setText(buildingId);
+                                    tvBuildingName.setText(name);
+                                    tvBuildingImageUrl.setText(imageUrl);
+                                    tvBuildingLevel.setText(level);
+                                    tvBuildingBuild.setText(building.toString());
+                                    tvBuildingEffect.setText(effect);
+
+                                    Integer effectAmount = amountOfEffectLevel0 + amountOfEffectByLevel * level;
+                                    Integer gasCost = gasCostLevel0 + gasCostByLevel * level;
+                                    Integer mineralCost = mineralCostLevel0 + mineralCostByLevel * level;
+                                    final Integer ttbuild = timeToBuildLevel0 + timeToBuildByLevel * level;
+
+                                    tvBuildingEffectAmount.setText(effectAmount);
+                                    tvBuildingGC.setText(String.valueOf(gasCost));
+                                    tvBuildingMC.setText(String.valueOf(mineralCost));
+                                    tvBuildingTTB.setText(String.valueOf(ttbuild));
+
+                                    Button btnBuilding = (Button) convertView.findViewById(R.id.btnBuilding);
+                                        //TODO : Setonclicklistener ???
+
+                                    if (!(building)) {
+                                        if (gas >= gasCost && minerals >= mineralCost) {
+
+                                        } else {
+                                            btnBuilding.setEnabled(false);
+                                            String text = "Missing ";
+                                            if(gasCost>gas && mineralCost>minerals){
+                                                text = text + String.valueOf(gasCost-gas)+" gas and "+String.valueOf(mineralCost-minerals)+" minerals";
+                                            }else if(gasCost>gas){
+                                                text = text + String.valueOf(gasCost-gas)+" gas";
+                                            }else{
+                                                text = text + String.valueOf(mineralCost-minerals)+" minerals";
+                                            }
+                                            btnBuilding.setText(text);
+                                        }
+                                    }else{
+                                        btnBuilding.setEnabled(false);
+                                        btnBuilding.setText("Remaining time : " + ttbuild.toString());
+                                    }
 
                                     return convertView;
                                 }
