@@ -11,4 +11,7 @@ public class SimpleResponse {
     public void setCode(String code){ this.code = code; }
     public String getCode(){return this.code;}
 
+    public SimpleResponse(String code){
+        setCode(code);
+    }
 }

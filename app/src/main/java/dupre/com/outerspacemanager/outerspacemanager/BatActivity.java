@@ -26,14 +26,20 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class BatActivity extends AppCompatActivity implements AdapterView.OnClickListener {
+public class BatActivity extends AppCompatActivity implements AdapterView.OnClickListener, AdapterView.OnItemClickListener {
 
+    private ArrayAdapter<Building> buildingAdapter;
     private Button btnMenu;
     private TextView tvDebug;
     private Toast toastMessage;
     private ListView listBuildings;
     private TextView tvGas;
     private TextView tvMinerals;
+    private List<Button> buildingBtns;
+    private List<Integer> buildingIds;
+    private List<Integer> ttbuildList;
+    private osma_service service;
+    private SharedPreferences settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +59,9 @@ public class BatActivity extends AppCompatActivity implements AdapterView.OnClic
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        final String PREFS_NAME = "session";
-        final SharedPreferences settings = getSharedPreferences(PREFS_NAME,0);
-        final osma_service service = retrofit.create(osma_service.class);
+        String PREFS_NAME = "session";
+        settings = getSharedPreferences(PREFS_NAME,0);
+        service = retrofit.create(osma_service.class);
         Call<buildingsResponse> request = service.getBuildings(settings.getString("token",""));
         SharedPreferences.Editor editor = settings.edit();
         final Float gas = Float.parseFloat(settings.getString("gas","0"));
@@ -67,9 +73,7 @@ public class BatActivity extends AppCompatActivity implements AdapterView.OnClic
         request.enqueue(new Callback<buildingsResponse>(){
             @Override
             public void onResponse(Call<buildingsResponse> call, Response<buildingsResponse> response) {
-                //toastMessage = Toast.makeText(getApplicationContext(), "Yep baby !"+response.toString(), Toast.LENGTH_LONG);
-                //tvDebug.setText(toString());
-                //toastMessage.show();
+
 
                 if (response.code()>400) {
 
@@ -84,7 +88,7 @@ public class BatActivity extends AppCompatActivity implements AdapterView.OnClic
                     List<Building> buildingsList = response.body().getBuildings();
                     final Building[] buildingsArray = buildingsList.toArray(new Building[buildingsList.size()]);
 
-                    ArrayAdapter<Building> buildingAdapter =
+                    buildingAdapter =
                             new ArrayAdapter<Building>(getApplicationContext(), R.layout.building_layout, buildingsArray){
                                 @Override
                                 public View getView(int position, View convertView, ViewGroup parent){
@@ -140,10 +144,14 @@ public class BatActivity extends AppCompatActivity implements AdapterView.OnClic
                                     tvBuildingTTB.setText("Time to build : "+String.valueOf(ttbuild));
 
                                     Button btnBuilding = (Button) convertView.findViewById(R.id.btnBuilding);
-                                        //TODO : Setonclicklistener ???
+
 
                                     if (!(building)) {
                                         if (gas >= gasCost && minerals >= mineralCost) {
+                                            btnBuilding.setOnClickListener(BatActivity.this);
+                                            buildingIds.add(buildingIds.size(),buildingId);
+                                            ttbuildList.add(buildingIds.size(),ttbuild);
+                                            buildingBtns.add(buildingIds.size(),btnBuilding);
 
                                         } else {
                                             btnBuilding.setEnabled(false);
@@ -162,6 +170,8 @@ public class BatActivity extends AppCompatActivity implements AdapterView.OnClic
                                         btnBuilding.setText("Remaining time : " + ttbuild.toString());
                                     }
 
+
+
                                     return convertView;
                                 }
                             };
@@ -173,7 +183,7 @@ public class BatActivity extends AppCompatActivity implements AdapterView.OnClic
                     listBuildings = (ListView) findViewById(R.id.listViewBuildings);
                     listBuildings.setAdapter(buildingAdapter);
 
-                    }
+                }
             }
 
             @Override
@@ -187,11 +197,51 @@ public class BatActivity extends AppCompatActivity implements AdapterView.OnClic
 
     }
 
+
     @Override
     public void onClick(View v){
-        Intent intent = new Intent(BatActivity.this, MainActivity.class);
-        startActivity(intent);
+        if (v == btnMenu){
+            Intent intent = new Intent(BatActivity.this, MainActivity.class);
+            startActivity(intent);
+        }else if(buildingBtns.contains(v)){
+            Integer buildingIndex = buildingBtns.indexOf(v);
+            Integer batimentId = buildingIds.get(buildingIndex);
+
+            Call<SimpleResponse> request = service.createBuilding( settings.getString("token","0") , batimentId.toString() );
+
+            request.enqueue(new Callback<SimpleResponse>() {
+                @Override
+                public void onResponse(Call<SimpleResponse> call, Response<SimpleResponse> response) {
+
+
+                }
+                @Override
+                public void onFailure(Call<SimpleResponse> call, Throwable t) {
+                    toastMessage = Toast.makeText(getApplicationContext(), "Une erreur est survenue, impossible de créer le bâtiment.", Toast.LENGTH_LONG);
+                    toastMessage.show();
+                }
+
+            });
+
+            Button btnBuilding = (Button) v;
+            Integer ttbuild = ttbuildList.get(buildingIndex);
+            btnBuilding.setText("Remaining time : " + ttbuild.toString());
+
+        }
 
     }
+
+
+    @Override
+    public void onItemClick(ArrayAdapter<?> parent, View v,int pos,long id){
+
+    }
+
+
+
+
+
+
+
 
 }

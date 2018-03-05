@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        Toast.makeText(MainActivity.this,"Click",Toast.LENGTH_LONG);
+        //Toast.makeText(MainActivity.this,"Click",Toast.LENGTH_LONG);
         for (Iterator<Button> aButton = btnList.iterator(); aButton.hasNext();){
             Button button = aButton.next();
             if (v == button){
