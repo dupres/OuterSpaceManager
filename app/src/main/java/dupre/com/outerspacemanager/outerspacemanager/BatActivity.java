@@ -58,11 +58,11 @@ public class BatActivity extends AppCompatActivity implements AdapterView.OnClic
         final osma_service service = retrofit.create(osma_service.class);
         Call<buildingsResponse> request = service.getBuildings(settings.getString("token",""));
         SharedPreferences.Editor editor = settings.edit();
-        final Integer gas = Integer.parseInt(settings.getString("gas","0"));
-        final Integer minerals = Integer.parseInt(settings.getString("minerals","0"));
+        final Float gas = Float.parseFloat(settings.getString("gas","0"));
+        final Float minerals = Float.parseFloat(settings.getString("minerals","0"));
 
-        tvGas.setText(gas.toString());
-        tvMinerals.setText(minerals.toString());
+        tvGas.setText(String.valueOf(gas));
+        tvMinerals.setText(String.valueOf(minerals));
 
         request.enqueue(new Callback<buildingsResponse>(){
             @Override
@@ -108,11 +108,11 @@ public class BatActivity extends AppCompatActivity implements AdapterView.OnClic
                                     TextView tvBuildingTTB = (TextView) convertView.findViewById(R.id.textViewBuildingTTB);
 
                                     Integer level = Integer.parseInt(currentBuilding.getLevel());
+                                    String effect = currentBuilding.getEffect();
                                     Integer amountOfEffectByLevel = Integer.parseInt(currentBuilding.getAmountOfEffectByLevel());
                                     Integer amountOfEffectLevel0 = Integer.parseInt(currentBuilding.getAmountOfEffectLevel0());
                                     Integer buildingId = Integer.parseInt(currentBuilding.getBuildingId());
                                     Boolean building = Boolean.getBoolean(currentBuilding.getBuilding());
-                                    String effect = currentBuilding.getEffect();
                                     Integer gasCostByLevel = Integer.parseInt(currentBuilding.getGasCostByLevel());
                                     Integer gasCostLevel0 = Integer.parseInt(currentBuilding.getGasCostLevel0());
                                     String imageUrl = currentBuilding.getImageURL();
@@ -122,11 +122,11 @@ public class BatActivity extends AppCompatActivity implements AdapterView.OnClic
                                     Integer timeToBuildByLevel = Integer.parseInt(currentBuilding.getTimeToBuildByLevel());
                                     Integer timeToBuildLevel0 = Integer.parseInt(currentBuilding.getTimeToBuildLevel0());
 
-                                    tvBuildingId.setText(buildingId);
+                                    tvBuildingId.setText("Id : "+String.valueOf(buildingId));
                                     tvBuildingName.setText(name);
-                                    tvBuildingImageUrl.setText(imageUrl);
-                                    tvBuildingLevel.setText(level);
-                                    tvBuildingBuild.setText(building.toString());
+                                    tvBuildingImageUrl.setText("Image : "+imageUrl);
+                                    tvBuildingLevel.setText("Level : "+String.valueOf(level));
+                                    tvBuildingBuild.setText("Building : "+building.toString());
                                     tvBuildingEffect.setText(effect);
 
                                     Integer effectAmount = amountOfEffectLevel0 + amountOfEffectByLevel * level;
@@ -134,10 +134,10 @@ public class BatActivity extends AppCompatActivity implements AdapterView.OnClic
                                     Integer mineralCost = mineralCostLevel0 + mineralCostByLevel * level;
                                     final Integer ttbuild = timeToBuildLevel0 + timeToBuildByLevel * level;
 
-                                    tvBuildingEffectAmount.setText(effectAmount);
-                                    tvBuildingGC.setText(String.valueOf(gasCost));
-                                    tvBuildingMC.setText(String.valueOf(mineralCost));
-                                    tvBuildingTTB.setText(String.valueOf(ttbuild));
+                                    tvBuildingEffectAmount.setText("Effect amount : "+String.valueOf(effectAmount));
+                                    tvBuildingGC.setText("Gas cost : "+String.valueOf(String.valueOf(gasCost)));
+                                    tvBuildingMC.setText("Minerals cost : "+String.valueOf(mineralCost));
+                                    tvBuildingTTB.setText("Time to build : "+String.valueOf(ttbuild));
 
                                     Button btnBuilding = (Button) convertView.findViewById(R.id.btnBuilding);
                                         //TODO : Setonclicklistener ???

@@ -28,6 +28,9 @@ public interface osma_service {
     @GET(baseUrl + "/api/v1/buildings/list")
     Call<buildingsResponse> getBuildings(@Header("x-access-token") String token);
 
+    @POST(baseUrl + "/api/v1/buildings/create/{buildingId}")
+    Call<SimpleResponse> createBuilding(@Header("x-access-token") String token,@Path("buildingId") String buildingId);
+
     //@POST("api/") String stringConnexion(@Header("Authorization") String authorization, @Path("user") String user, @Query("sort") String sort, @Body User user);
     ///api/vXXX/auth/login
 }
