@@ -7,6 +7,9 @@ import java.util.List;
  */
 
 public class buildingsResponse {
+    private String size;
+    private List<Building> buildings;
+
     public String getSize() {
         return size;
     }
@@ -22,9 +25,6 @@ public class buildingsResponse {
     public void setBuildings(List<Building> buildings) {
         this.buildings = buildings;
     }
-
-    private String size;
-    private List<Building> buildings;
 
     public buildingsResponse(String size, List<Building> buildings) {
         this.size = size;

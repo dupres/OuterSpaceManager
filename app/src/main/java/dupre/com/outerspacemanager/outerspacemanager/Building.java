@@ -13,19 +13,19 @@ public class Building {
     private String effect;
     private String gasCostByLevel;
     private String gasCostLevel0;
-    private String imageURL;
+    private String imageUrl;
     private String mineralCostByLevel;
     private String mineralCostLevel0;
     private String name;
     private String timeToBuildByLevel;
     private String timeToBuildLevel0;
 
-    public Building(String level, String amountOfEffectByLevel, String amountOfEffectLevel0, String buildingId, String building, String effect, String gasCostByLevel, String gasCostLevel0, String imageURL, String mineralCostByLevel, String mineralCostLevel0, String name, String timeToBuildByLevel, String timeToBuildLevel0) {
+    /*public Building(String level, String amountOfEffectByLevel, String amountOfEffectLevel0, String buildingId, Boolean building, String effect, String gasCostByLevel, String gasCostLevel0, String imageURL, String mineralCostByLevel, String mineralCostLevel0, String name, String timeToBuildByLevel, String timeToBuildLevel0) {
         this.level = level;
         this.amountOfEffectByLevel = amountOfEffectByLevel;
         this.amountOfEffectLevel0 = amountOfEffectLevel0;
         this.buildingId = buildingId;
-        this.building = building;
+        this.building = String.valueOf(building);
         this.effect = effect;
         this.gasCostByLevel = gasCostByLevel;
         this.gasCostLevel0 = gasCostLevel0;
@@ -35,7 +35,7 @@ public class Building {
         this.name = name;
         this.timeToBuildByLevel = timeToBuildByLevel;
         this.timeToBuildLevel0 = timeToBuildLevel0;
-    }
+    }*/
 
     public String getLevel() {
         return level;
@@ -102,11 +102,11 @@ public class Building {
     }
 
     public String getImageURL() {
-        return imageURL;
+        return imageUrl;
     }
 
     public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
+        this.imageUrl = imageURL;
     }
 
     public String getMineralCostByLevel() {

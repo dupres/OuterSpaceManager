@@ -1,83 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/BuildingsPropertyList"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_centerHorizontal="false"
     android:background="@android:color/background_dark"
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textViewBuildingId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Id :"
-        android:textColor="@android:color/background_light" />
-
-    <TextView
         android:id="@+id/textViewBuildingName"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:text="Nom :"
+        android:textAlignment="center"
         android:textColor="@android:color/background_light" />
 
-    <TextView
-        android:id="@+id/textViewBuildingImageURL"
-        android:layout_width="wrap_content"
+    <ImageView
+        android:id="@+id/imageViewBuilding"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="URL de l'image :"
-        android:textColor="@android:color/background_light" />
-
-    <TextView
-        android:id="@+id/textViewBuildingLevel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Level :"
-        android:textColor="@android:color/background_light" />
-
-    <TextView
-        android:id="@+id/textViewBuildingBuild"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Est en construction :"
-        android:textColor="@android:color/background_light" />
+        android:layout_gravity="center_horizontal"
+        app:srcCompat="@android:drawable/btn_star" />
 
     <TextView
         android:id="@+id/textViewBuildingEffect"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:text="Effet :"
+        android:textAlignment="center"
         android:textColor="@android:color/background_light" />
 
-
-
-    <TextView
-        android:id="@+id/textViewBuildingEffectAmount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Quantité"
-        android:textColor="@android:color/background_light" />
-
-    <TextView
-        android:id="@+id/textViewBuildingGC"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Coût en gaz"
-        android:textColor="@android:color/background_light" />
-
-    <TextView
-        android:id="@+id/textViewBuildingMC"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Coût en minéraux"
-        android:textColor="@android:color/background_light" />
-
-    <TextView
-        android:id="@+id/textViewBuildingTTB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Temps de construction"
-        android:textColor="@android:color/background_light" />
 
     <Button
         android:id="@+id/btnBuilding"

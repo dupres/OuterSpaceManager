@@ -59,29 +59,40 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <TextView
-        android:id="@+id/tvGas"
+        android:id="@+id/tvBuildingScore"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_height="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:textColor="@android:color/background_light"
-        app:layout_constraintBottom_toTopOf="@+id/tvMinerals"
         app:layout_constraintEnd_toStartOf="@+id/buttonMenuBat"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/textViewBat"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvMinerals"
+        android:id="@+id/tvBuildingGas"
         android:layout_width="0dp"
         android:layout_height="16dp"
-        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:textColor="@android:color/background_light"
-        app:layout_constraintBottom_toTopOf="@+id/listViewBuildings"
         app:layout_constraintEnd_toStartOf="@+id/buttonMenuBat"
-        app:layout_constraintStart_toEndOf="@+id/textViewBat" />
+        app:layout_constraintStart_toEndOf="@+id/textViewBat"
+        app:layout_constraintTop_toBottomOf="@+id/tvBuildingScore" />
+
+    <TextView
+        android:id="@+id/tvBuildingMinerals"
+        android:layout_width="0dp"
+        android:layout_height="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@android:color/background_light"
+        app:layout_constraintEnd_toStartOf="@+id/buttonMenuBat"
+        app:layout_constraintStart_toEndOf="@+id/textViewBat"
+        app:layout_constraintTop_toBottomOf="@+id/tvBuildingGas" />
 
 </android.support.constraint.ConstraintLayout>
