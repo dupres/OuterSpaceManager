@@ -31,7 +31,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class BatActivity extends AppCompatActivity implements AdapterView.OnClickListener, AdapterView.OnItemClickListener {
+public class BuildingActivity extends AppCompatActivity implements AdapterView.OnClickListener, AdapterView.OnItemClickListener {
 
     private ArrayAdapter<Building> buildingAdapter;
     private Button btnMenu;
@@ -168,7 +168,7 @@ public class BatActivity extends AppCompatActivity implements AdapterView.OnClic
                                         if (gas >= gasCost && minerals >= mineralCost) {
                                             btnBuilding.setText("Améliorer ? "+gasCost+" gas, "+mineralCost+" minéraux, "+ttbuild+"s");
                                             btnBuilding.setEnabled(true);
-                                            btnBuilding.setOnClickListener(BatActivity.this);
+                                            btnBuilding.setOnClickListener(BuildingActivity.this);
                                             //buildingIds.add(buildingIds.size(),buildingId);
                                             //ttbuildList.add(buildingIds.size(),ttbuild);
                                             //buildingBtns.add(buildingIds.size(),btnBuilding);
@@ -250,7 +250,7 @@ public class BatActivity extends AppCompatActivity implements AdapterView.OnClic
     @Override
     public void onClick(View v){
         if (v == btnMenu){
-            Intent intent = new Intent(BatActivity.this, MainActivity.class);
+            Intent intent = new Intent(BuildingActivity.this, MainActivity.class);
             startActivity(intent);
         }else if(buildingBtns.contains(v)){
             final Integer buildingIndex = buildingBtns.indexOf(v);

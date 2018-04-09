@@ -6,11 +6,6 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
-
-/**
- * Created by sdupre on 16/01/2018.
- */
 
 public interface osma_service {
 
@@ -30,6 +25,12 @@ public interface osma_service {
 
     @POST(baseUrl + "/api/v1/buildings/create/{buildingId}")
     Call<SimpleResponse> createBuilding(@Header("x-access-token") String token,@Path("buildingId") String buildingId);
+
+    @GET(baseUrl + "/api/v1/searches/list")
+    Call<SearchesResponse> getSearches(@Header("x-access-token") String token);
+
+    @POST(baseUrl + "/api/v1/searches/create/{searchId}")
+    Call<SimpleResponse> startSearch(@Header("x-access-token") String token,@Path("searchId") String searchId);
 
     //@POST("api/") String stringConnexion(@Header("Authorization") String authorization, @Path("user") String user, @Query("sort") String sort, @Body User user);
     ///api/vXXX/auth/login

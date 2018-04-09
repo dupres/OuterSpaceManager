@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
-    tools:context="dupre.com.outerspacemanager.outerspacemanager.BatActivity">
+    tools:context="dupre.com.outerspacemanager.outerspacemanager.BuildingActivity">
 
     <Button
         android:id="@+id/buttonMenuBat"
@@ -65,6 +65,8 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
+        android:foregroundGravity="center"
+        android:gravity="center"
         android:textColor="@android:color/background_light"
         app:layout_constraintEnd_toStartOf="@+id/buttonMenuBat"
         app:layout_constraintHorizontal_bias="0.0"
@@ -78,6 +80,8 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:foregroundGravity="center"
+        android:gravity="center"
         android:textColor="@android:color/background_light"
         app:layout_constraintEnd_toStartOf="@+id/buttonMenuBat"
         app:layout_constraintStart_toEndOf="@+id/textViewBat"
@@ -90,6 +94,8 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:foregroundGravity="center"
+        android:gravity="center"
         android:textColor="@android:color/background_light"
         app:layout_constraintEnd_toStartOf="@+id/buttonMenuBat"
         app:layout_constraintStart_toEndOf="@+id/textViewBat"

@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -169,13 +168,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent intent = new Intent (MainActivity.this, VGActivity.class);
             startActivity(intent);
         }else if(v == btnBat){
-            Intent intent = new Intent (MainActivity.this, BatActivity.class);
+            Intent intent = new Intent (MainActivity.this, BuildingActivity.class);
             startActivity(intent);
         }else if (v == btnFlotte){
             Intent intent = new Intent (MainActivity.this, FlotteActivity.class);
             startActivity(intent);
         }else if(v == btnRech){
-            Intent intent = new Intent (MainActivity.this, RechActivity.class);
+            Intent intent = new Intent (MainActivity.this, SearchActivity.class);
             startActivity(intent);
         }else if(v == btnChant){
             Intent intent = new Intent (MainActivity.this, ChantActivity.class);

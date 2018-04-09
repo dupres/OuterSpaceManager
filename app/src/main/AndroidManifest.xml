@@ -21,8 +21,8 @@
         </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".VGActivity" />
-        <activity android:name=".BatActivity" />
-        <activity android:name=".RechActivity" />
+        <activity android:name=".BuildingActivity" />
+        <activity android:name=".SearchActivity" />
         <activity android:name=".FlotteActivity" />
         <activity android:name=".ChantActivity" />
         <activity android:name=".GalaxieActivity"></activity>
